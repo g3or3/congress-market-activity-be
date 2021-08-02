@@ -2,6 +2,14 @@ const Controller = require("./baseController");
 const { Person } = require("../../models");
 
 class PersonController extends Controller {
+	async getOne(req, res) {
+		try {
+			res.json(await Person.findOne());
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
 	async getAll(req, res, next) {
 		const { page, limit } = req.query;
 		const offset = (parseInt(page) - 1) * parseInt(limit);
