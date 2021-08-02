@@ -53,7 +53,7 @@ class Record {
 
 		return {
 			doc_id,
-			url: res[0].url,
+			url: res[0]?.url,
 			data: res.map((transaction) => {
 				delete transaction.doc_id;
 				delete transaction.url;
