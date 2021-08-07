@@ -1,16 +1,25 @@
 const knex = require("../config/knex");
 
 class Person {
-	async findOne() {
-		return await knex("person").limit(10);
+	async getAllPeople(limit, offset) {
+		let res = knex("person").distinctOn("last_name").orderBy("last_name");
+
+		if (limit) res = res.limit(limit).offset(offset);
+
+		return await res;
 	}
 
-	async findAll(limit, offset) {
-		return await knex("person")
-			.distinctOn("last_name")
-			.orderBy("last_name")
-			.limit(limit)
-			.offset(offset);
+	async getDocsByPersonId(person_id) {
+		const res = await knex
+			.select("ptr.doc_id", "date")
+			.from("person_to_record as ptr")
+			.join("record as r", "r.doc_id", "ptr.doc_id")
+			.where({ person_id });
+
+		return res.map((record) => {
+			record.date = record.date.toLocaleDateString();
+			return record;
+		});
 	}
 }
 

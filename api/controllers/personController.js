@@ -2,23 +2,22 @@ const Controller = require("./baseController");
 const { Person } = require("../../models");
 
 class PersonController extends Controller {
-	async getOne(req, res) {
-		try {
-			res.json(await Person.findOne());
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
 	async getAll(req, res, next) {
-		const { page, limit } = req.query;
+		let { page, limit } = req.query;
+
 		const offset = (parseInt(page) - 1) * parseInt(limit);
 
 		try {
-			res.json(await Person.findAll(limit, offset));
+			res.json(await Person.getAllPeople(limit, offset));
 		} catch (err) {
 			next({ message: "Unable to fetch people from the database." });
 		}
+	}
+
+	async getByPersonId(req, res) {
+		const { person_id } = req.params;
+
+		res.json(await Person.getDocsByPersonId(person_id));
 	}
 }
 
