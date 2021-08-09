@@ -26,13 +26,24 @@ class Record {
 		return {
 			doc_id,
 			url: res[0]?.url,
-			data: res.map((record) => {
+			transactions: res.map((record) => {
 				delete record.doc_id;
 				delete record.url;
 				record.date = record.date.toLocaleDateString();
 				return record;
 			}),
 		};
+	}
+
+	async getMostTransacted(year) {
+		return await knex
+			.distinct("company", "ticker")
+			.count("company as total")
+			.from("record")
+			.whereRaw(`EXTRACT(year from date) = ${year}`)
+			.groupBy("company", "ticker")
+			.orderBy("total", "desc")
+			.limit(25);
 	}
 }
 

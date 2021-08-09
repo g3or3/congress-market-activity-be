@@ -25,5 +25,14 @@ class RecordController extends Controller {
 			next({ message: "Unable to fetch records from the database." });
 		}
 	}
+
+	async getMostTransacted(req, res, next) {
+		try {
+			const year = new Date().getFullYear();
+			res.json(await Record.getMostTransacted(year));
+		} catch (err) {
+			next({ message: "Unable to fetch records from the database." });
+		}
+	}
 }
 module.exports = new RecordController();
