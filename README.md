@@ -40,7 +40,7 @@ Retrieves the list of transactions grouped by document id with the optional *yea
 
 - `/api/record/:doc_id`
 
-Retrieve a specific list of transactions that pertain to that specific record id.
+Retrieves a specific list of transactions that pertain to that specific record id.
 
 *localhost:8000/api/record/20017924*
 
