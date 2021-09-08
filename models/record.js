@@ -16,15 +16,15 @@ class Record {
 		return Object.values(res);
 	}
 
-	async getByDocId(doc_id) {
+	async getByDocId(docId) {
 		const res = await knex
 			.select("url", "r.*")
 			.from("record as r")
 			.join("person_to_record as ptr", "ptr.doc_id", "r.doc_id")
-			.where("r.doc_id", `${doc_id}`);
+			.where("r.doc_id", `${docId}`);
 
 		return {
-			doc_id,
+			docId,
 			url: res[0]?.url,
 			transactions: res.map((record) => {
 				delete record.doc_id;
@@ -44,6 +44,35 @@ class Record {
 			.groupBy("company", "ticker")
 			.orderBy("total", "desc")
 			.limit(25);
+	}
+
+	async getMostRecent(year) {
+		const res = await knex
+			.select(
+				"ptr.doc_id",
+				"r.record_id",
+				"first_name",
+				"last_name",
+				"ticker",
+				"company",
+				"asset",
+				"type",
+				"date",
+				"amount_range",
+				"description",
+				"url"
+			)
+			.from("record as r")
+			.join("person_to_record as ptr", "ptr.doc_id", "r.doc_id")
+			.join("person as p", "p.person_id", "ptr.person_id")
+			.whereRaw(`EXTRACT(year from date) = ${year}`)
+			.orderBy("date", "desc")
+			.limit(200);
+
+		return res.map((record) => {
+			record.date = record.date.toLocaleDateString();
+			return record;
+		});
 	}
 }
 

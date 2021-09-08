@@ -1,4 +1,4 @@
 module.exports = {
-	Person: require("./personModel"),
-	Record: require("./recordModel"),
+	Person: require("./person"),
+	Record: require("./record"),
 };

@@ -1,4 +1,4 @@
 module.exports = {
-	PersonController: require("./personController"),
-	RecordController: require("./recordController"),
+	PersonController: require("./person"),
+	RecordController: require("./record"),
 };
