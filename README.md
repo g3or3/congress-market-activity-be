@@ -4,7 +4,11 @@
 
 [Deployed on AWS Beanstalk](http://congress-market-activity.eba-jgcutjhi.us-east-2.elasticbeanstalk.com/)
 
-[Data Gathered using program in this Repo](https://github.com/g3or3/congress-market-activity-db)
+[Front-End Repo](https://github.com/g3or3/congress-market-activity-fe)
+
+[Database Creation](https://github.com/g3or3/congress-market-activity-db)
+
+[Database Updates](https://github.com/g3or3/cron-congress-market-activity)
 
 ---
 
